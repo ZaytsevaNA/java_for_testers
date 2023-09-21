@@ -8,7 +8,6 @@ public class TriangleTests {
     @Test
     void cantCalculatePerimeter(){
         Assertions.assertEquals(42.0, new Triangle(13.0, 14.0, 15.0).perimeter());
-
     }
 
     @Test
@@ -19,7 +18,6 @@ public class TriangleTests {
     @Test
     void cantCalculateArea(){
         Assertions.assertEquals(84.0, new Triangle(13.0, 14.0, 15.0).area());
-
     }
 }
 
