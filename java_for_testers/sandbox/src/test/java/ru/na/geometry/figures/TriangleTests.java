@@ -6,18 +6,28 @@ import org.junit.jupiter.api.Test;
 public class TriangleTests {
 
     @Test
-    void cantCalculatePerimeter(){
+    void cantCalculatePerimeter() {
         Assertions.assertEquals(42.0, new Triangle(13.0, 14.0, 15.0).perimeter());
     }
 
     @Test
-    void cantCalculateSemiperimeter(){
+    void cantCalculateSemiperimeter() {
         Assertions.assertEquals(21.0, new Triangle(13.0, 14.0, 15.0).semiperimeter());
     }
 
     @Test
-    void cantCalculateArea(){
+    void cantCalculateArea() {
         Assertions.assertEquals(84.0, new Triangle(13.0, 14.0, 15.0).area());
+    }
+
+    @Test
+    void cannotCreateTriangleWithNegativeSide() {
+        try {
+            new Triangle(-13.0, 14.0, 15.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            //OK
+        }
     }
 }
 
