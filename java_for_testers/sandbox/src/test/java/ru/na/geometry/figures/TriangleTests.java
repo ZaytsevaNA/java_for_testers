@@ -32,23 +32,30 @@ public class TriangleTests {
 
     @Test
     void testEquality() {
-        var g1 = new Triangle(13.0, 14.0, 15.0);
-        var g2 = new Triangle(14.0, 15.0, 13.0);
+        var x = 13.0;
+        var y = 14.0;
+        var z = 15.0;
+        var g1 = new Triangle(x, y, z);
+        var g2 = new Triangle(x, z, y);
+        var g3 = new Triangle(y, x, z);
+        var g4 = new Triangle(z, x, y);
+        var g5 = new Triangle(y, z, x);
+        var g6 = new Triangle(z, y, x);
         Assertions.assertEquals(g1, g2);
-    }
-
-    @Test
-    void testEquality2() {
-        var g1 = new Triangle(13.0, 14.0, 15.0);
-        var g3 = new Triangle(15.0, 13.0, 14.0);
         Assertions.assertEquals(g1, g3);
-    }
-
-    @Test
-    void testEquality3() {
-        var g2 = new Triangle(14.0, 15.0, 13.0);
-        var g3 = new Triangle(15.0, 13.0, 14.0);
+        Assertions.assertEquals(g1, g4);
+        Assertions.assertEquals(g1, g5);
+        Assertions.assertEquals(g1, g6);
         Assertions.assertEquals(g2, g3);
+        Assertions.assertEquals(g2, g4);
+        Assertions.assertEquals(g2, g5);
+        Assertions.assertEquals(g2, g6);
+        Assertions.assertEquals(g3, g4);
+        Assertions.assertEquals(g3, g5);
+        Assertions.assertEquals(g3, g6);
+        Assertions.assertEquals(g4, g5);
+        Assertions.assertEquals(g4, g5);
+        Assertions.assertEquals(g5, g6);
     }
 }
 
