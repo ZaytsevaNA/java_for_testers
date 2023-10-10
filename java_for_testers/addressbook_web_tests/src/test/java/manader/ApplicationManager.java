@@ -1,5 +1,6 @@
 package manader;
 
+import model.ContactData;
 import model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -60,5 +61,42 @@ public class ApplicationManager {
         driver.findElement(By.name("selected[]")).click();
         driver.findElement(By.name("delete")).click();
         driver.findElement(By.linkText("group page")).click();
+    }
+
+    public void openAddNewPage() {
+        if (!isElementPresent(By.name("new"))) {
+            driver.findElement(By.linkText("add new")).click();
+        }
+    }
+
+    public void openHomePage() {
+        if (!isElementPresent(By.name("new"))) {
+            driver.findElement(By.linkText("home")).click();
+        }
+    }
+
+    public void createContact(ContactData contact) {
+        driver.findElement(By.name("firstname")).click();
+        driver.findElement(By.name("firstname")).sendKeys(contact.first_name());
+        driver.findElement(By.name("lastname")).click();
+        driver.findElement(By.name("lastname")).sendKeys(contact.last_name());
+        driver.findElement(By.name("address")).click();
+        driver.findElement(By.name("address")).sendKeys(contact.address());
+        driver.findElement(By.name("mobile")).click();
+        driver.findElement(By.name("mobile")).sendKeys(contact.mobile());
+        driver.findElement(By.name("email")).click();
+        driver.findElement(By.name("email")).sendKeys(contact.e_mail());
+        driver.findElement(By.name("submit")).click();
+        driver.findElement(By.linkText("home page")).click();
+
+    }
+
+    public boolean isContactPresent() {
+        return isElementPresent(By.xpath("//img[@alt=\'Edit\']"));
+    }
+
+    public void removeContact() {
+        driver.findElement(By.xpath("//img[@alt=\'Edit\']")).click();
+        driver.findElement(By.xpath("(//input[@name=\'update\'])[3]")).click();
     }
 }
