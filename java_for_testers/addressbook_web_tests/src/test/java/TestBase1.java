@@ -34,17 +34,17 @@ public class TestBase1 {
         }
     }
 
-    protected void createContact(ContactData contactData) {
+    protected void createContact(ContactData contact) {
         driver.findElement(By.name("firstname")).click();
-        driver.findElement(By.name("firstname")).sendKeys(contactData.contact_first_name());
+        driver.findElement(By.name("firstname")).sendKeys(contact.first_name());
         driver.findElement(By.name("lastname")).click();
-        driver.findElement(By.name("lastname")).sendKeys(contactData.contact_last_name());
+        driver.findElement(By.name("lastname")).sendKeys(contact.last_name());
         driver.findElement(By.name("address")).click();
-        driver.findElement(By.name("address")).sendKeys(contactData.contact_address());
+        driver.findElement(By.name("address")).sendKeys(contact.address());
         driver.findElement(By.name("mobile")).click();
-        driver.findElement(By.name("mobile")).sendKeys(contactData.contact_mobile());
+        driver.findElement(By.name("mobile")).sendKeys(contact.mobile());
         driver.findElement(By.name("email")).click();
-        driver.findElement(By.name("email")).sendKeys(contactData.contact_e_mail());
+        driver.findElement(By.name("email")).sendKeys(contact.e_mail());
         driver.findElement(By.name("submit")).click();
         driver.findElement(By.linkText("home page")).click();
     }
