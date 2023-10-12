@@ -3,41 +3,32 @@ package manader;
 import model.ContactData;
 import org.openqa.selenium.By;
 
-public class ContactHelper {
-    private final ApplicationManager manager;
+public class ContactHelper extends HelperBase {
 
     public ContactHelper(ApplicationManager manager) {
-        this.manager = manager;
-    }
-
-    public void openAddNewPage() {
-        if (!manager.isElementPresent(By.name("new"))) {
-            manager.driver.findElement(By.linkText("add new")).click();
-        }
+        super(manager);
     }
 
     public void openHomePage() {
         if (!manager.isElementPresent(By.name("new"))) {
-            manager.driver.findElement(By.linkText("home")).click();
+            click(By.linkText("home"));
         }
     }
 
     public void createContact(ContactData contact) {
         openHomePage();
-        manager.driver.findElement(By.linkText("add new")).click();
-        manager.driver.findElement(By.name("firstname")).click();
-        manager.driver.findElement(By.name("firstname")).sendKeys(contact.first_name());
-        manager.driver.findElement(By.name("lastname")).click();
-        manager.driver.findElement(By.name("lastname")).sendKeys(contact.last_name());
-        manager.driver.findElement(By.name("address")).click();
-        manager.driver.findElement(By.name("address")).sendKeys(contact.address());
-        manager.driver.findElement(By.name("mobile")).click();
-        manager.driver.findElement(By.name("mobile")).sendKeys(contact.mobile());
-        manager.driver.findElement(By.name("email")).click();
-        manager.driver.findElement(By.name("email")).sendKeys(contact.e_mail());
-        manager.driver.findElement(By.name("submit")).click();
-        manager.driver.findElement(By.linkText("home page")).click();
+        initGroupCreation();
+        fillContacttForm(contact);
+        sudmitContactCreation();
+        returnToContactPage();
+    }
 
+    public void modifyContact(ContactData modifiedName) {
+        openHomePage();
+        editContact();
+        fillContacttForm(modifiedName);
+        updateContact();
+        returnToContactPage();
     }
 
     public boolean isContactPresent() {
@@ -45,9 +36,47 @@ public class ContactHelper {
         return manager.isElementPresent(By.xpath("//img[@alt=\'Edit\']"));
     }
 
+    private void returnToContactPage() {
+        click(By.linkText("home page"));
+    }
+
+    private void initGroupCreation() {
+        click(By.linkText("add new"));
+    }
+
+    private void updateContact() {
+        click(By.name("update"));
+    }
+
+    private void sudmitContactCreation() {
+        click(By.name("submit"));
+    }
+
+    private void fillContacttForm(ContactData contact) {
+        type(By.name("firstname"), contact.first_name());
+        type(By.name("lastname"), contact.last_name());
+        type(By.name("address"), contact.address());
+        type(By.name("mobile"), contact.mobile());
+        type(By.name("email"), contact.e_mail());
+
+    }
+
     public void removeContact() {
         openHomePage();
-        manager.driver.findElement(By.xpath("//img[@alt=\'Edit\']")).click();
-        manager.driver.findElement(By.xpath("(//input[@name=\'update\'])[3]")).click();
+        editContact();
+        deletContact();
+    }
+
+    public void editContact() {
+        openHomePage();
+        click(By.xpath("//img[@alt=\'Edit\']"));
+    }
+
+    public void deletContact() {
+        openHomePage();
+        editContact();
+        click(By.xpath("(//input[@name=\'update\'])[3]"));
     }
 }
+
+
