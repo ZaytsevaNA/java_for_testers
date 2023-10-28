@@ -31,11 +31,6 @@ public class ContactHelper extends HelperBase {
         returnToContactPage();
     }
 
-    public boolean isContactPresent() {
-        openHomePage();
-        return manager.isElementPresent(By.xpath("//img[@alt=\'Edit\']"));
-    }
-
     private void returnToContactPage() {
         click(By.linkText("home page"));
     }
@@ -63,7 +58,7 @@ public class ContactHelper extends HelperBase {
 
     public void removeContact() {
         openHomePage();
-        editContact();
+        dellOneContact();
         deletContact();
     }
 
@@ -72,11 +67,31 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//img[@alt=\'Edit\']"));
     }
 
-    public void deletContact() {
+    public void dellOneContact() {
         openHomePage();
-        editContact();
-        click(By.xpath("(//input[@name=\'update\'])[3]"));
+        click(By.name("selected[]"));
+    }
+
+    public void deletContact() {
+        click(By.xpath("//input[@value=\'Delete\']"));
+        manager.driver.switchTo().alert().accept();
+    }
+
+    public int getCountContact() {
+        openHomePage();
+        return manager.driver.findElements(By.name("selected[]")).size();
+    }
+
+    public void removeAllContact() {
+        openHomePage();
+        allContact();
+        deletContact();
+    }
+
+    private void allContact() {
+        click(By.id("MassCB"));
     }
 }
+
 
 
