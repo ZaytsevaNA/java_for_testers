@@ -3,6 +3,9 @@ package manader;
 import model.ContactData;
 import org.openqa.selenium.By;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactHelper extends HelperBase {
 
     public ContactHelper(ApplicationManager manager) {
@@ -25,6 +28,7 @@ public class ContactHelper extends HelperBase {
 
     public void modifyContact(ContactData modifiedName) {
         openHomePage();
+        selectContact(null);
         editContact();
         fillContacttForm(modifiedName);
         updateContact();
@@ -56,20 +60,18 @@ public class ContactHelper extends HelperBase {
 
     }
 
-    public void removeContact() {
+    private void selectContact(ContactData contact) {
+        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
+    }
+
+    public void removeContact(ContactData contact) {
         openHomePage();
-        dellOneContact();
+        selectContact(contact);
         deletContact();
     }
 
     public void editContact() {
-        openHomePage();
-        click(By.xpath("//img[@alt=\'Edit\']"));
-    }
-
-    public void dellOneContact() {
-        openHomePage();
-        click(By.name("selected[]"));
+        click(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a/img"));
     }
 
     public void deletContact() {
@@ -90,6 +92,21 @@ public class ContactHelper extends HelperBase {
 
     private void allContact() {
         click(By.id("MassCB"));
+    }
+
+    public List <ContactData> getList() {
+        openHomePage();
+        var contact = new ArrayList<ContactData>();
+        var spans = manager.driver.findElements(By.cssSelector("span.contact"));
+        for (var span : spans) {
+            var last_name = span.getText();
+            var first_name = span.getText();
+            var checkbox = span.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            contact.add(new ContactData().withId(id).withLastName(last_name));
+
+        }
+        return contact;
     }
 }
 
