@@ -1,13 +1,13 @@
 package model;
 
-public record ContactData(String id, String first_name, String last_name, String address, String mobile, String e_mail) {
+public record ContactData(String id, String last_name, String first_name, String address, String e_mail, String mobile) {
 
     public ContactData() {
         this("", "", "", "", "", "");
     }
 
     public ContactData withId(String id) {
-        return new ContactData(id, first_name, this.last_name, this.address, this.mobile, this.e_mail);
+        return new ContactData(id, this.first_name, this.last_name, this.address, this.mobile, this.e_mail);
 
     }
     public ContactData withFirstName(String first_name) {

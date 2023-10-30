@@ -19,9 +19,9 @@ public class ContactRemovalTests extends TestBase {
         var index = rnd.nextInt(oldContact.size());
         app.contact().removeContact(oldContact.get(index));
         var newContact = app.contact().getList();
-        var expectedList = new ArrayList<>(oldContact);
-        expectedList.remove(index);
-        Assertions.assertEquals(newContact, expectedList);
+        var expectedTable = new ArrayList<>(oldContact);
+        expectedTable.remove(index);
+        Assertions.assertEquals(newContact, expectedTable);
     }
 
     @Test

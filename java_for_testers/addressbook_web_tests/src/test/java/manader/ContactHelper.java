@@ -26,11 +26,10 @@ public class ContactHelper extends HelperBase {
         returnToContactPage();
     }
 
-    public void modifyContact(ContactData modifiedName) {
+    public void modifyContact(ContactData contact,ContactData modifiedFirstName) {
         openHomePage();
-        selectContact(null);
-        editContact();
-        fillContacttForm(modifiedName);
+        initContactModification(contact);
+        fillContacttForm(modifiedFirstName);
         updateContact();
         returnToContactPage();
     }
@@ -52,11 +51,11 @@ public class ContactHelper extends HelperBase {
     }
 
     private void fillContacttForm(ContactData contact) {
-        type(By.name("firstname"), contact.first_name());
         type(By.name("lastname"), contact.last_name());
+        type(By.name("firstname"), contact.first_name());
         type(By.name("address"), contact.address());
-        type(By.name("mobile"), contact.mobile());
         type(By.name("email"), contact.e_mail());
+        type(By.name("mobile"), contact.mobile());
 
     }
 
@@ -70,8 +69,8 @@ public class ContactHelper extends HelperBase {
         deletContact();
     }
 
-    public void editContact() {
-        click(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a/img"));
+    private void initContactModification(ContactData contact) {
+        click(By.cssSelector(String.format("a[href=\'edit.php?id=%s\']", contact.id())));
     }
 
     public void deletContact() {
@@ -103,7 +102,7 @@ public class ContactHelper extends HelperBase {
             var first_name = tr.getText();
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            contact.add(new ContactData().withId(id).withLastName(last_name).withFirstName(first_name));
+            contact.add(new ContactData().withId(id).withLastName(last_name));
 
         }
         return contact;
