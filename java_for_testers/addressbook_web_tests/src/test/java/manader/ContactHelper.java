@@ -20,13 +20,13 @@ public class ContactHelper extends HelperBase {
 
     public void createContact(ContactData contact) {
         openHomePage();
-        initGroupCreation();
+        initContactCreation();
         fillContacttForm(contact);
         sudmitContactCreation();
         returnToContactPage();
     }
 
-    public void modifyContact(ContactData contact,ContactData modifiedFirstName) {
+    public void modifyContact(ContactData contact, ContactData modifiedFirstName) {
         openHomePage();
         initContactModification(contact);
         fillContacttForm(modifiedFirstName);
@@ -38,7 +38,7 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home page"));
     }
 
-    private void initGroupCreation() {
+    private void initContactCreation() {
         click(By.linkText("add new"));
     }
 
@@ -51,11 +51,11 @@ public class ContactHelper extends HelperBase {
     }
 
     private void fillContacttForm(ContactData contact) {
-        type(By.name("lastname"), contact.last_name());
         type(By.name("firstname"), contact.first_name());
+        type(By.name("lastname"), contact.last_name());
         type(By.name("address"), contact.address());
-        type(By.name("email"), contact.e_mail());
         type(By.name("mobile"), contact.mobile());
+        type(By.name("email"), contact.e_mail());
 
     }
 
@@ -98,12 +98,13 @@ public class ContactHelper extends HelperBase {
         var contact = new ArrayList<ContactData>();
         var trs = manager.driver.findElements(By.xpath("//tr[@name=\'entry\']"));
         for (var tr : trs) {
-            var last_name = tr.getText();
-            var first_name = tr.getText();
+//            var first_name = tr.getText();
+//            var last_name = tr.getText();
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            contact.add(new ContactData().withId(id).withLastName(last_name));
-
+            var last_name = tr.findElement(By.xpath("td[2]")).getText();
+            var first_name = tr.findElement(By.xpath("td[3]")).getText();
+            contact.add(new ContactData().withId(id).withFirstName(first_name).withLastName(last_name));
         }
         return contact;
     }

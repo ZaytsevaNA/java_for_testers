@@ -1,6 +1,7 @@
 package model;
 
-public record ContactData(String id, String last_name, String first_name, String address, String e_mail, String mobile) {
+public record ContactData(String id, String first_name, String last_name, String address, String mobile,
+                          String e_mail) {
 
     public ContactData() {
         this("", "", "", "", "", "");
@@ -10,6 +11,7 @@ public record ContactData(String id, String last_name, String first_name, String
         return new ContactData(id, this.first_name, this.last_name, this.address, this.mobile, this.e_mail);
 
     }
+
     public ContactData withFirstName(String first_name) {
         return new ContactData(this.id, first_name, this.last_name, this.address, this.mobile, this.e_mail);
 
