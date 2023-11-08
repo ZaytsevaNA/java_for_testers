@@ -3,6 +3,7 @@ package tests;
 import model.ContactData;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -19,12 +20,12 @@ public class ContactCreationsTests extends TestBase {
                 for (var address : List.of("", "address")) {
                     for (var mobile : List.of("", "mobile")) {
                         for (var e_mail : List.of("", "e_mail")) {
-                            result.add(new ContactData()
-                                    .withFirstName(first_name)
-                                    .withLastName(last_name)
-                                    .withAddress(address)
-                                    .withEmail(e_mail)
-                                    .withMobile(mobile));
+                                result.add(new ContactData()
+                                        .withFirstName(first_name)
+                                        .withLastName(last_name)
+                                        .withAddress(address)
+                                        .withEmail(e_mail)
+                                        .withMobile(mobile));
                         }
                     }
                 }
@@ -55,14 +56,15 @@ public class ContactCreationsTests extends TestBase {
         expectedTable.add(contact.withId(newContact.get(newContact.size() - 1).id())
                 .withAddress("")
                 .withMobile("")
-                .withEmail(""));
+                .withEmail("")
+                .withPhoto("src/test/resources/images/avatar.png"));
         expectedTable.sort(compareById);
         Assertions.assertEquals(newContact, expectedTable);
     }
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "first_name'", "", "", "", "")));
+                new ContactData("", "first_name'", "", "", "", "", "src/test/resources/images/avatar.png")));
         return result;
     }
 
@@ -74,5 +76,16 @@ public class ContactCreationsTests extends TestBase {
         var newContact = app.contact().getList();
         Assertions.assertEquals(newContact, oldContact);
     }
-}
 
+    @Test
+    public void canCreateContacts() {
+        var contact = new ContactData()
+                .withFirstName(randomString(10))
+                .withLastName(randomString(10))
+                .withAddress(randomString(10))
+                .withMobile(randomString(10))
+                .withEmail(randomString(10))
+                .withPhoto("src/test/resources/images/avatar.png");
+        app.contact().createContact(contact);
+    }
+}
