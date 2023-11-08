@@ -85,7 +85,7 @@ public class ContactCreationsTests extends TestBase {
                 .withAddress(randomString(10))
                 .withMobile(randomString(10))
                 .withEmail(randomString(10))
-                .withPhoto("src/test/resources/images/avatar.png");
+                .withPhoto(randomFile("src/test/resources/images"));
         app.contact().createContact(contact);
     }
 }
