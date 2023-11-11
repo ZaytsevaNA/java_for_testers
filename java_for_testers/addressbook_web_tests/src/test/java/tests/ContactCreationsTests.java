@@ -30,22 +30,22 @@ public class ContactCreationsTests extends TestBase {
 
     @ParameterizedTest
     @MethodSource("contactProvider")
-    public void canCreateMultupleContact(ContactData contact) {
-        var oldContact = app.contact().getList();
+    public void canCreateContacts(ContactData contact) {
+        var oldContacts = app.hbm().getContactList();
         app.contact().createContact(contact);
-        var newContact = app.contact().getList();
+        var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
-        newContact.sort(compareById);
-        var expectedTable = new ArrayList<>(oldContact);
-        expectedTable.add(contact.withId(newContact.get(newContact.size() - 1).id())
-                .withAddress("")
-                .withMobile("")
-                .withEmail("")
-                .withPhoto("src/test/resources/images/avatar.png"));
-        expectedTable.sort(compareById);
-        Assertions.assertEquals(newContact, expectedTable);
+
+        newContacts.sort(compareById);
+
+        var expectedList = new ArrayList<>(oldContacts);
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()).withPhoto("src/test/resources/images/avatar.png"));
+        expectedList.sort(compareById);
+
+        Assertions.assertEquals(newContacts, expectedList);
+
     }
 
     public static List<ContactData> negativeContactProvider() {
@@ -64,7 +64,7 @@ public class ContactCreationsTests extends TestBase {
     }
 
     @Test
-    public void canCreateContacts() {
+    public void canCreateSingleRandomContact() {
         var contact = new ContactData()
                 .withFirstName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(10))

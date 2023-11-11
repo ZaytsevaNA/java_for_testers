@@ -15,7 +15,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void openHomePage() {
-        if (!manager.isElementPresent(By.name("new"))) {
+        if (!manager.isElementPresent(By.name("searchstring"))) {
             click(By.linkText("home"));
         }
     }
@@ -71,7 +71,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contact.address());
         type(By.name("mobile"), contact.mobile());
         type(By.name("email"), contact.email());
-        attach(By.name("photo"),contact.photo());
+        attach(By.name("photo"), contact.photo());
     }
 
     private void selectContact(ContactData contact) {
@@ -80,8 +80,42 @@ public class ContactHelper extends HelperBase {
 
     public void removeContact(ContactData contact) {
         openHomePage();
+        selectAllGroupOnHomePage();
         selectContact(contact);
         deletContact();
+        openHomePage();
+    }
+
+    public void deleteContactFromGroup(GroupData group) {
+        click(By.linkText("home"));
+        selectGroupOnHomePage(group);
+        click(By.name("selected[]"));
+        submitRemoveFromGroup();
+        openHomePage();
+    }
+
+    public void addGroup(GroupData group) {
+        click(By.linkText("home"));
+        selectGroupForAddOnHomePage(group);
+        click(By.name("selected[]"));
+        submitAddFromGroup();
+        click(By.linkText("home"));
+    }
+
+    private void selectGroupOnHomePage(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
+    }
+
+    private void selectAllGroupOnHomePage() {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue("");
+    }
+
+    private void selectGroupForAddOnHomePage(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+    }
+
+    private void submitRemoveFromGroup() {
+        click(By.xpath("//input[@name='remove']"));
     }
 
     private void initContactModification(ContactData contact) {
@@ -99,31 +133,44 @@ public class ContactHelper extends HelperBase {
     }
 
     public void removeAllContact() {
-        openHomePage();
-        allContact();
+        click(By.linkText("home"));
+        selectAllGroupOnHomePage();
+        selectAllContacts();
         deletContact();
-    }
-
-    private void allContact() {
-        click(By.id("MassCB"));
-    }
-
-    public List<ContactData> getList() {
         openHomePage();
-        var contact = new ArrayList<ContactData>();
-        var trs = manager.driver.findElements(By.xpath("//tr[@name=\'entry\']"));
-        for (var tr : trs) {
+    }
+
+    private void selectAllContacts() {
+        var checkboxes = manager.driver.findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes) {
+            checkbox.click();
+        }
+    }
+
+        private void submitAddFromGroup () {
+            click(By.xpath("//input[@name='add']"));
+        }
+
+        private void allContact () {
+            click(By.id("MassCB"));
+        }
+
+        public List<ContactData> getList () {
+            openHomePage();
+            var contact = new ArrayList<ContactData>();
+            var trs = manager.driver.findElements(By.xpath("//tr[@name=\'entry\']"));
+            for (var tr : trs) {
 //            var first_name = tr.getText();
 //            var last_name = tr.getText();
-            var checkbox = tr.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            var last_name = tr.findElement(By.xpath("td[2]")).getText();
-            var first_name = tr.findElement(By.xpath("td[3]")).getText();
-            contact.add(new ContactData().withId(id).withFirstName(first_name).withLastName(last_name));
+                var checkbox = tr.findElement(By.name("selected[]"));
+                var id = checkbox.getAttribute("value");
+                var last_name = tr.findElement(By.xpath("td[2]")).getText();
+                var first_name = tr.findElement(By.xpath("td[3]")).getText();
+                contact.add(new ContactData().withId(id).withFirstName(first_name).withLastName(last_name));
+            }
+            return contact;
         }
-        return contact;
     }
-}
 
 
 
