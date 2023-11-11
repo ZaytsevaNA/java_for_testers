@@ -1,25 +1,25 @@
 [ {
   "id" : "",
-  "first_name" : "test-",
-  "last_name" : "test-",
+  "firstname" : "test-",
+  "lastname" : "test-",
   "address" : "test-",
   "mobile" : "test-",
-  "e_mail" : "test-",
+  "email" : "test-",
   "photo" : "src/test/resources/images/avatar.png"
 }, {
   "id" : "",
-  "first_name" : "test-qxukymkbfv",
-  "last_name" : "test-vwiftzhfja",
+  "firstname" : "test-qxukymkbfv",
+  "lastname" : "test-vwiftzhfja",
   "address" : "test-wjxwlxqqgn",
   "mobile" : "test-hlfiasfblt",
-  "e_mail" : "test-yhfsrohihn",
+  "email" : "test-yhfsrohihn",
   "photo" : "src/test/resources/images/avatar.png"
 }, {
   "id" : "",
-  "first_name" : "test-rhwpcupajoyjdntldcfi",
-  "last_name" : "test-hppkelyzdzpwtnvrihue",
+  "firstname" : "test-rhwpcupajoyjdntldcfi",
+  "lastname" : "test-hppkelyzdzpwtnvrihue",
   "address" : "test-diwuczdpvfkrgbucqipm",
   "mobile" : "test-taqdjbinmvbtoavmodxa",
-  "e_mail" : "test-nnkdsiglrxwcqhxlbkjd",
+  "email" : "test-nnkdsiglrxwcqhxlbkjd",
   "photo" : "src/test/resources/images/avatar.png"
 } ]
