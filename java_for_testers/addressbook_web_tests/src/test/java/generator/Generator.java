@@ -13,7 +13,6 @@ import model.GroupData;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -73,10 +72,7 @@ public class Generator {
     private Object generateContacts() {
         return generateData(() -> new ContactData()
                 .withFirstName(CommonFunctions.randomString(10))
-                .withLastName(CommonFunctions.randomString(10))
-                .withAddress(CommonFunctions.randomString(10))
-                .withMobile(CommonFunctions.randomString(10))
-                .withEmail(CommonFunctions.randomString(10)));
+                .withLastName(CommonFunctions.randomString(10)));
 
     }
 

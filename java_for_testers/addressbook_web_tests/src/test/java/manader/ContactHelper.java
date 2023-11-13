@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContactHelper extends HelperBase {
 
@@ -69,9 +71,6 @@ public class ContactHelper extends HelperBase {
     private void fillContacttForm(ContactData contact) {
         type(By.name("firstname"), contact.firstname());
         type(By.name("lastname"), contact.lastname());
-        type(By.name("address"), contact.address());
-        type(By.name("mobile"), contact.mobile());
-        type(By.name("email"), contact.email());
         attach(By.name("photo"), contact.photo());
     }
 
@@ -147,30 +146,91 @@ public class ContactHelper extends HelperBase {
                 .forEach(WebElement::click);
     }
 
-        private void submitAddFromGroup () {
-            click(By.xpath("//input[@name='add']"));
-        }
+    private void submitAddFromGroup() {
+        click(By.xpath("//input[@name='add']"));
+    }
 
-        private void allContact () {
-            click(By.id("MassCB"));
-        }
+    private void allContact() {
+        click(By.id("MassCB"));
+    }
 
-        public List<ContactData> getList () {
-            openHomePage();
-            var contact = new ArrayList<ContactData>();
-            var trs = manager.driver.findElements(By.xpath("//tr[@name=\'entry\']"));
-            for (var tr : trs) {
+    public List<ContactData> getList() {
+        openHomePage();
+        var contact = new ArrayList<ContactData>();
+        var trs = manager.driver.findElements(By.xpath("//tr[@name=\'entry\']"));
+        for (var tr : trs) {
 //            var first_name = tr.getText();
 //            var last_name = tr.getText();
-                var checkbox = tr.findElement(By.name("selected[]"));
-                var id = checkbox.getAttribute("value");
-                var last_name = tr.findElement(By.xpath("td[2]")).getText();
-                var first_name = tr.findElement(By.xpath("td[3]")).getText();
-                contact.add(new ContactData().withId(id).withFirstName(first_name).withLastName(last_name));
-            }
-            return contact;
+            var checkbox = tr.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            var last_name = tr.findElement(By.xpath("td[2]")).getText();
+            var first_name = tr.findElement(By.xpath("td[3]")).getText();
+            contact.add(new ContactData().withId(id).withFirstName(first_name).withLastName(last_name));
         }
+        return contact;
     }
+
+    public String getPhones(ContactData contact) {
+        return manager.driver.findElement(By.xpath(
+                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
+    }
+
+    public Map<String, String > getPhones() {
+        openHomePage();
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            var id = row.findElement(By.tagName("input")).getAttribute("id");
+            var phones = row.findElements(By.tagName("td")).get(5).getText();
+            result.put(id, phones);
+        }
+        return result;
+    }
+
+    public String getAddresses(ContactData contact) {
+        openHomePage();
+        selectContact(contact);
+        initContactModification(contact);
+        var address = manager.driver.findElement(By.name("address")).getText();
+        var address2 = manager.driver.findElement(By.name("address2")).getText();
+
+        return address+address2;
+    }
+
+    public String getAddress(ContactData contact) {
+        openHomePage();
+        selectContact(contact);
+        initContactModification(contact);
+        var address = manager.driver.findElement(By.name("address")).getText();
+        return address;
+    }
+
+    public String getEmailsFromEditForm(ContactData contact) {
+        openHomePage();
+        selectContact(contact);
+        initContactModification(contact);
+        var email = manager.driver.findElement(By.name("email")).getAttribute("value");
+        var email2 = manager.driver.findElement(By.name("email2")).getAttribute("value");
+        var email3 = manager.driver.findElement(By.name("email3")).getAttribute("value");
+
+        return email+email2+email3;
+
+    }
+
+    public String getEmailsFromHomePage(ContactData contact) {
+        openHomePage();
+        return manager.driver.findElement(By.xpath(
+                String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText().replaceAll("\\r\\n|\\r|\\n", "");
+    }
+
+    public String getAddressFromHomePage(ContactData contact) {
+        openHomePage();
+        return manager.driver.findElement(By.xpath(
+                String.format("//input[@id='%s']/../../td[4]", contact.id()))).getText().replaceAll("\\r\\n|\\r|\\n", "");
+    }
+
+
+}
 
 
 

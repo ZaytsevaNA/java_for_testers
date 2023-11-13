@@ -17,9 +17,6 @@ public class ContactRemovalTests extends TestBase {
             app.hbm().createContact(new ContactData()
                     .withFirstName(CommonFunctions.randomString(10))
                     .withLastName(CommonFunctions.randomString(10))
-                    .withAddress(CommonFunctions.randomString(10))
-                    .withMobile(CommonFunctions.randomString(10))
-                    .withEmail(CommonFunctions.randomString(10))
                     .withPhoto(randomFile("src/test/resources/images")));
         }
         var oldContact = app.hbm().getContactList();
@@ -41,9 +38,6 @@ public class ContactRemovalTests extends TestBase {
             app.hbm().createContact(new ContactData()
                     .withFirstName(CommonFunctions.randomString(10))
                     .withLastName(CommonFunctions.randomString(10))
-                    .withAddress(CommonFunctions.randomString(10))
-                    .withMobile(CommonFunctions.randomString(10))
-                    .withEmail(CommonFunctions.randomString(10))
                     .withPhoto(randomFile("src/test/resources/images")));
         }
 
@@ -63,9 +57,6 @@ public class ContactRemovalTests extends TestBase {
             app.hbm().createContact(new ContactData()
                     .withFirstName(CommonFunctions.randomString(10))
                     .withLastName(CommonFunctions.randomString(10))
-                    .withAddress(CommonFunctions.randomString(10))
-                    .withMobile(CommonFunctions.randomString(10))
-                    .withEmail(CommonFunctions.randomString(10))
                     .withPhoto(randomFile("src/test/resources/images")));
         }
         app.contact().removeAllContact();

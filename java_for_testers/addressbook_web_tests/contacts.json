@@ -2,24 +2,15 @@
   "id" : "",
   "firstname" : "test-",
   "lastname" : "test-",
-  "address" : "test-",
-  "mobile" : "test-",
-  "email" : "test-",
   "photo" : "src/test/resources/images/avatar.png"
 }, {
   "id" : "",
   "firstname" : "test-sjitbffdjy",
   "lastname" : "test-dpvdiwdikk",
-  "address" : "test-npabvjfuln",
-  "mobile" : "test-qpolvgawbs",
-  "email" : "test-nnjacwjtla",
   "photo" : "src/test/resources/images/avatar.png"
 }, {
   "id" : "",
   "firstname" : "test-bthfakqaguokjbnyqkoo",
   "lastname" : "test-mqblxqincpgcijrgngcq",
-  "address" : "test-xedtixndwwpmtzxjdzqj",
-  "mobile" : "test-rktbcbrgjcgecamiafhy",
-  "email" : "test-unblgycpypgamplhxljm",
   "photo" : "src/test/resources/images/avatar.png"
 } ]

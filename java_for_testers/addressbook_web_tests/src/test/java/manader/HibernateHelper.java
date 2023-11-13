@@ -50,9 +50,15 @@ public class HibernateHelper extends HelperBase {
         return new ContactData().withId("" + record.id)
                 .withFirstName(record.firstname)
                 .withLastName(record.lastname)
-                .withAddress(record.address)
+                .withHome(record.home)
                 .withMobile(record.mobile)
-                .withEmail(record.email);
+                .withWork(record.work)
+                .withSecondary(record.phone2)
+                .withAddress(record.address)
+                .withAddress2(record.address2)
+                .withEmail(record.email)
+                .withEmail2(record.email2)
+                .withEmail3(record.email3);
     }
 
     private static GroupRecord convert(GroupData data) {
@@ -68,7 +74,7 @@ public class HibernateHelper extends HelperBase {
         if ("".equals(id)) {
             id = "0";
         }
-        return new ContactRecord(Integer.parseInt(id), data.firstname(), data.lastname(), data.address(), data.mobile(), data.email(), data.photo());
+        return new ContactRecord(Integer.parseInt(id), data.firstname(), data.lastname(), data.photo(), data.home(), data.mobile(), data.work(), data.secondary(), data.address(), data.address2(), data.email(), data.email2(), data.email3());
     }
 
     public List<GroupData> getGroupList() {

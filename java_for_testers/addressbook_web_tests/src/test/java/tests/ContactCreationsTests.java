@@ -50,7 +50,7 @@ public class ContactCreationsTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "firstname'", "", "", "", "", "src/test/resources/images/avatar.png")));
+                new ContactData("", "firstname'", "", "src/test/resources/images/avatar.png", "", "", "", "", "", "","","","")));
         return result;
     }
 
@@ -68,9 +68,6 @@ public class ContactCreationsTests extends TestBase {
         var contact = new ContactData()
                 .withFirstName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(10))
-                .withAddress(CommonFunctions.randomString(10))
-                .withMobile(CommonFunctions.randomString(10))
-                .withEmail(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images"));
         app.contact().createContact(contact);
     }
@@ -80,9 +77,6 @@ public class ContactCreationsTests extends TestBase {
         var contact = new ContactData()
                 .withFirstName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(10))
-                .withAddress(CommonFunctions.randomString(10))
-                .withMobile(CommonFunctions.randomString(10))
-                .withEmail(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images"));
 
         if (app.hbm().getGroupCount() == 0) {
