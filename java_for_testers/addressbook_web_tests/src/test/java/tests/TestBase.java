@@ -21,13 +21,13 @@ public class TestBase {
             var properties = new Properties();
             properties.load(new FileReader(System.getProperty("target", "local.properties")));
             app = new ApplicationManager();
-            app.init(System.getProperty("browser", "chrome"),properties);
+            app.init(System.getProperty("browser", "chrome"), properties);
         }
     }
 
 
     @AfterEach
-    void checkDataBaseConsistency () {
+    void checkDataBaseConsistency() {
         app.jdbc().checkConsistency();
     }
 
@@ -35,6 +35,6 @@ public class TestBase {
         var fileNames = new File(dir).list();
         var rnd = new Random();
         var index = rnd.nextInt(fileNames.length);
-        return Paths.get(dir,fileNames[index]).toString();
+        return Paths.get(dir, fileNames[index]).toString();
     }
 }

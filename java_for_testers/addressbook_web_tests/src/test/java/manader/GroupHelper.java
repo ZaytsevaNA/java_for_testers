@@ -98,7 +98,7 @@ public class GroupHelper extends HelperBase {
         openGroupPage();
         var spans = manager.driver.findElements(By.cssSelector("span.group"));
         return spans.stream()
-                .map(span ->{
+                .map(span -> {
                     var name = span.getText();
                     var checkbox = span.findElement(By.name("selected[]"));
                     var id = checkbox.getAttribute("value");

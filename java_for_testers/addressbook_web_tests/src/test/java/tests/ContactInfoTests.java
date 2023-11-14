@@ -33,7 +33,7 @@ public class ContactInfoTests extends TestBase {
         ));
 
         var phones = app.contact().getPhones();
-        Assertions.assertEquals(expected,phones);
+        Assertions.assertEquals(expected, phones);
 
     }
 
@@ -64,7 +64,7 @@ public class ContactInfoTests extends TestBase {
 
         var expectedAddress = expected.get(contacts.get(index).id());
         var interfaceAddress = app.contact().getAddresses(contacts.get(index));
-        Assertions.assertEquals(expectedAddress,interfaceAddress);
+        Assertions.assertEquals(expectedAddress, interfaceAddress);
 
     }
 
@@ -88,12 +88,12 @@ public class ContactInfoTests extends TestBase {
         var index = rnd.nextInt(contacts.size());
 
 
-
         var homePageAddress = app.contact().getAddressFromHomePage(contacts.get(index));
         var interfaceAddress = app.contact().getAddress(contacts.get(index));
-        Assertions.assertEquals(interfaceAddress,homePageAddress);
+        Assertions.assertEquals(interfaceAddress, homePageAddress);
 
     }
+
     @Test
     void testEmails() {
         if (app.hbm().getContactCount() == 0) {
@@ -119,7 +119,7 @@ public class ContactInfoTests extends TestBase {
 
         var homePageEmails = app.contact().getEmailsFromHomePage(contacts.get(index));
         var interfaceEmails = app.contact().getEmailsFromEditForm(contacts.get(index));
-        Assertions.assertEquals(interfaceEmails,homePageEmails);
+        Assertions.assertEquals(interfaceEmails, homePageEmails);
 
 
     }

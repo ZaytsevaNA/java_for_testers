@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public class ContactHelper extends HelperBase {
 
@@ -159,7 +158,7 @@ public class ContactHelper extends HelperBase {
         return contact;
     }
 
-    public Map<String, String > getPhones() {
+    public Map<String, String> getPhones() {
         openHomePage();
         var result = new HashMap<String, String>();
         List<WebElement> rows = manager.driver.findElements(By.name("entry"));
@@ -178,7 +177,7 @@ public class ContactHelper extends HelperBase {
         var address = manager.driver.findElement(By.name("address")).getText();
         var address2 = manager.driver.findElement(By.name("address2")).getText();
 
-        return address+address2;
+        return address + address2;
     }
 
     public String getAddress(ContactData contact) {
@@ -197,7 +196,7 @@ public class ContactHelper extends HelperBase {
         var email2 = manager.driver.findElement(By.name("email2")).getAttribute("value");
         var email3 = manager.driver.findElement(By.name("email3")).getAttribute("value");
 
-        return email+email2+email3;
+        return email + email2 + email3;
 
     }
 

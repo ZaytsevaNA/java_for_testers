@@ -23,7 +23,8 @@ public class ContactCreationsTests extends TestBase {
         var result = new ArrayList<ContactData>();
         var json = Files.readString(Paths.get("contacts.json"));
         ObjectMapper mapper = new ObjectMapper();
-        var value = mapper.readValue(json, new TypeReference<List<ContactData>>() {});
+        var value = mapper.readValue(json, new TypeReference<List<ContactData>>() {
+        });
         result.addAll(value);
         return result;
     }
@@ -50,7 +51,7 @@ public class ContactCreationsTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "firstname'", "", "src/test/resources/images/avatar.png", "", "", "", "", "", "","","","")));
+                new ContactData("", "firstname'", "", "src/test/resources/images/avatar.png", "", "", "", "", "", "", "", "", "")));
         return result;
     }
 
@@ -87,6 +88,6 @@ public class ContactCreationsTests extends TestBase {
         var oldRelated = app.hbm().getContactsInGroup(group);
         app.contact().createContact(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(oldRelated.size() +1, newRelated.size());
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
     }
 }

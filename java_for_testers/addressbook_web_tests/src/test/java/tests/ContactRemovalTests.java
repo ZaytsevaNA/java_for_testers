@@ -28,6 +28,7 @@ public class ContactRemovalTests extends TestBase {
         expectedTable.remove(index);
         Assertions.assertEquals(newContact, expectedTable);
     }
+
     @Test
     public void canRemoveAllContactsAtOnce() {
         if (app.hbm().getContactCount() == 0) {
