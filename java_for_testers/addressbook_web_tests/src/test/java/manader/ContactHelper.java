@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class ContactHelper extends HelperBase {
 
@@ -127,11 +128,6 @@ public class ContactHelper extends HelperBase {
         manager.driver.switchTo().alert().accept();
     }
 
-    public int getCountContact() {
-        openHomePage();
-        return manager.driver.findElements(By.name("selected[]")).size();
-    }
-
     public void removeAllContact() {
         click(By.linkText("home"));
         selectAllGroupOnHomePage();
@@ -150,29 +146,17 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@name='add']"));
     }
 
-    private void allContact() {
-        click(By.id("MassCB"));
-    }
-
     public List<ContactData> getList() {
         openHomePage();
         var contact = new ArrayList<ContactData>();
         var trs = manager.driver.findElements(By.xpath("//tr[@name=\'entry\']"));
         for (var tr : trs) {
-//            var first_name = tr.getText();
-//            var last_name = tr.getText();
-            var checkbox = tr.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            var last_name = tr.findElement(By.xpath("td[2]")).getText();
-            var first_name = tr.findElement(By.xpath("td[3]")).getText();
-            contact.add(new ContactData().withId(id).withFirstName(first_name).withLastName(last_name));
+            var id = tr.findElement(By.cssSelector("td:nth-child(1).center>input")).getAttribute("value");
+            var lastName = tr.findElement(By.xpath("td[2]")).getText();
+            var firstName = tr.findElement(By.xpath("td[3]")).getText();
+            contact.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
         return contact;
-    }
-
-    public String getPhones(ContactData contact) {
-        return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
     }
 
     public Map<String, String > getPhones() {
@@ -229,7 +213,29 @@ public class ContactHelper extends HelperBase {
                 String.format("//input[@id='%s']/../../td[4]", contact.id()))).getText().replaceAll("\\r\\n|\\r|\\n", "");
     }
 
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectGroupForShowContacts(group);
+        selectContact(contact);
+        manager.driver.findElement(By.name("remove")).click();
+        manager.driver.findElement(By.cssSelector("div.msgbox"));
+    }
 
+    private void selectGroupForShowContacts(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
+    }
+
+    public void addContactToGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectContact(contact);
+        selectGroupForAddContact(group);
+    }
+
+    private void selectGroupForAddContact(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+        manager.driver.findElement(By.name("add")).click();
+        manager.driver.findElement(By.cssSelector("div.msgbox"));
+    }
 }
 
 

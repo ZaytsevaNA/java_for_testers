@@ -28,6 +28,17 @@ public class ContactRemovalTests extends TestBase {
         expectedTable.remove(index);
         Assertions.assertEquals(newContact, expectedTable);
     }
+    @Test
+    public void canRemoveAllContactsAtOnce() {
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData()
+                    .withFirstName(CommonFunctions.randomString(10))
+                    .withLastName(CommonFunctions.randomString(10))
+                    .withPhoto(randomFile("src/test/resources/images")));
+        }
+        app.contact().removeAllContact();
+        Assertions.assertEquals(0, app.hbm().getContactCount());
+    }
 
     @Test
     public void canDeleteContactFromGroup() {
@@ -51,16 +62,5 @@ public class ContactRemovalTests extends TestBase {
         Assertions.assertEquals(oldRelated.size() - 1, newRelated.size());
     }
 
-    @Test
-    public void canRemoveAllContactsAtOnce() {
-        if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData()
-                    .withFirstName(CommonFunctions.randomString(10))
-                    .withLastName(CommonFunctions.randomString(10))
-                    .withPhoto(randomFile("src/test/resources/images")));
-        }
-        app.contact().removeAllContact();
-        Assertions.assertEquals(0, app.hbm().getContactCount());
-    }
 }
 
