@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.Set;
 
 public class ContactModificationTests extends TestBase {
 
@@ -39,7 +40,7 @@ public class ContactModificationTests extends TestBase {
             app.hbm().createContact(new ContactData()
                     .withFirstName(CommonFunctions.randomString(10))
                     .withLastName(CommonFunctions.randomString(10))
-                    .withPhoto(randomFile("src/test/resources/images")));
+                    .withPhoto(randomFile("src/test/resources/images/avatar.png")));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
@@ -49,8 +50,8 @@ public class ContactModificationTests extends TestBase {
 
         if (app.hbm().isExistContactInGroup(group, contact)) {
             app.contact().removeContactFromGroup(contact, group);
-        }
-        ;
+        };
+
         var oldRelated = app.hbm().getContactsInGroup(group);
         app.contact().addContactToGroup(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
@@ -64,7 +65,14 @@ public class ContactModificationTests extends TestBase {
         expectedList.add(contact);
         expectedList.sort(compareById);
         Assertions.assertEquals(expectedList, newRelated);
+
+        var newUiContactsInGroup = app.contact().getList(group);
+        newUiContactsInGroup.sort(compareById);
+        var expectedUiList = new ArrayList<>(expectedList);
+        expectedUiList.replaceAll(contacts -> contacts.withPhoto("src/test/resources/images/avatar.png"));
+        Assertions.assertEquals(expectedUiList, newUiContactsInGroup);
     }
+
 
     @Test
     public void canAddGroupInContact() {

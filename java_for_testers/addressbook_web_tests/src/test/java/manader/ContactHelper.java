@@ -88,7 +88,7 @@ public class ContactHelper extends HelperBase {
 
     public void deleteContactFromGroup(GroupData group) {
         click(By.linkText("home"));
-        selectGroupOnHomePage(group);
+        selectGroupForShowContacts(group);
         click(By.name("selected[]"));
         submitRemoveFromGroup();
         openHomePage();
@@ -100,10 +100,6 @@ public class ContactHelper extends HelperBase {
         click(By.name("selected[]"));
         submitAddFromGroup();
         click(By.linkText("home"));
-    }
-
-    private void selectGroupOnHomePage(GroupData group) {
-        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 
     private void selectAllGroupOnHomePage() {
@@ -156,6 +152,14 @@ public class ContactHelper extends HelperBase {
             contact.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
         return contact;
+    }
+
+    public List<ContactData> getList(GroupData group) {
+        {
+            openHomePage();
+            new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
+        }
+        return getList();
     }
 
     public Map<String, String> getPhones() {
