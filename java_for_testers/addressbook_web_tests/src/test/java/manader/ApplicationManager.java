@@ -26,7 +26,7 @@ public class ApplicationManager {
         if (driver == null) {
             if ("chrome".equals(browser)) {
                 var service = ChromeDriverService.createDefaultService();
-                service.setExecutable("c:/windows/system32/chromedriver.exe");
+                service.setExecutable("c:/windows/system32/chromedriver1.exe");
                 driver = new ChromeDriver(service);
             } else if ("firefox".equals(browser)) {
                 var service = GeckoDriverService.createDefaultService();
